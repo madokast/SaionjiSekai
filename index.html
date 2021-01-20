@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sekai</title>
+<link href="./css/element-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./js/vue.js"></script>
+<script type="text/javascript" src="./js/element-ui.js"></script>
+<script type="text/javascript" src="./db/data.js"></script>
+<style>
+</style>
+</head>
+
+<body>
+    <div id="app">
+        <el-header>
+            <el-row>
+                <el-link>~Days~ </el-link>
+            </el-row>
+        </el-header>
+        <el-main>
+            <el-row>
+                <el-image v-for="img in imgs" :key="img.id" :style="{width:img.width, height:img.height}" :src="img.url"
+                    fit="cover">
+                </el-image>
+            </el-row>
+        </el-main>
+        <el-footer>
+            </el-row>
+            <el-link type="primary">主要链接(10) </el-link>
+            <el-link type="primary">主要链接(2) </el-link>
+            </el-row>
+        </el-footer>
+    </div>
+
+
+
+</body>
+<script>
+    const MAIN = {
+        data() {
+            return {
+                numberOfImgALine: 4,
+                imgs: DATABASE
+            }
+        },
+        created() {
+            let imgNumber = this.imgs.length;
+            console.log(imgNumber);
+            for (let i = 0; i < imgNumber; i += this.numberOfImgALine) {
+                let totalWidth = 0;
+                for (let j = 0; j < this.numberOfImgALine; j++) {
+                    let id = i+j;
+                    if(id<imgNumber){
+                        totalWidth=+this.imgs[id].width;
+                    }
+                }
+                for (let j = 0; j < this.numberOfImgALine; j++) {
+                    let id = i+j;
+                    if(id<imgNumber){
+                        let scale = width/totalWidth;
+                        this.imgs[id].width = width/totalWidth;
+                    }
+                }
+            }
+        }
+    };
+    const BODY = Vue.extend(MAIN);
+    new BODY().$mount('#app');
+</script>
+
+</html>
